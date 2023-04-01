@@ -1,0 +1,20 @@
+{
+jobs:[
+{
+name: "NOLA Career Finder",
+hours: "9 AM - 5PM", 
+zipcode: "70122"
+about: "We help local New Orleanians find jobs that can help fulfill their dreams"
+},
+{
+name: "Jobs 4 NOLA",
+hours: "8 AM - 4 PM",
+zipcode: "70122"
+about: "Connecting local talent with jobs that match their skills"
+},
+{
+name: "Hire NOLA Now"
+hours: "10 AM - 6 PM"
+zipcode: "70117"
+about: "Prioritizing hiring NOLA residents to fill local needs." 
+}
