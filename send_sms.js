@@ -1,6 +1,11 @@
 // Download the helper library from https://www.twilio.com/docs/node/install
 // Find your Account SID and Auth Token at twilio.com/console
 // and set the environment variables. See http://twil.io/secure
+
+//  TO RUN THIS PAGE: 
+//  ngrok http 3000 (to connect to https://6854-174-76-80-43.ngrok.io)
+//  node send_sms.js (to run on 3000)
+// 
 require('dotenv').config();
 
 // required libraries for node.js
