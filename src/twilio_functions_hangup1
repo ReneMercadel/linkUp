@@ -1,0 +1,6 @@
+exports.handler = function(context, event, callback) {
+    let twiml = new Twilio.twiml.VoiceResponse();
+    twiml.say('No input, will hangup the call now.');
+    twiml.hangup();
+    callback(null, twiml);
+};
