@@ -16,23 +16,61 @@ const port = 3000;
 
 const accountSid = process.env.TWILIO_SID;
 const authToken = process.env.TWILIO_TOKEN;
-// const twilioNumber= process.env.TWILIO_NUMBER;
+const twilioNumber= process.env.TWILIO_NUMBER;
 
 
 
 // required modules for twilio response 
 const client = require('twilio')(accountSid, authToken);
+// const client = require('twilio')(accountSid, authToken, {
+//   autoRetry: true,
+//   maxRetries: 3
+// });
+
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
 
 
 // webhook to handle response 
 
 app.post('/message', async (req, res) => {
+  // console.log(req);
   const twiml = new MessagingResponse();
   twiml.message('this is a message from us made in node')
   res.writeHead(200,{'Content-Type': 'text/xml'});
   res.end(twiml.toString())
 }); 
+
+app.post('/message', async (req, res) => {
+  // console.log(req);
+  const responseObject = {
+    message: "this is a test message",
+    zip: '7099',
+    status: 'success',
+  };
+
+  res.setHeader('Content-Type', 'application/json');
+  res.status(200).send(JSON.stringify(responseObject)); 
+  console.log(responseObject); 
+
+
+  // const twiml = new MessagingResponse();
+  // twiml.message('this is a message from us made in node')
+  // res.writeHead(200,{'Content-Type': 'text/xml'});
+  // res.end(twiml.toString())
+}); 
+
+
+//   const findMessage = async()=>{
+//   const messageListFromNumber = await client.messages.list({to: process.env.TWILIO_NUMBER});
+//   const firstMessageSid = messageListFromNumber[0].sid;
+//   console.log(firstMessageSid);
+
+   
+// }
+
+// findMessage(); 
+
+
 
 
 app.listen(3000, () => {

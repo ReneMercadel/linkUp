@@ -1,0 +1,67 @@
+{
+    "jobs":[
+    {
+    "name": "NOLA Career Finder",
+    "hours": "9 AM - 5PM", 
+    "zipcode": "70122",
+    "about": "We help local New Orleanians find jobs that can help fulfill their dreams"
+    },
+    {
+    "name": "Jobs 4 NOLA",
+    "hours": "8 AM - 4 PM",
+    "zipcode": "70122",
+    "about": "Connecting local talent with jobs that match their skills"
+    },
+    {
+    "name": "Hire NOLA Now",
+    "hours": "10 AM - 6 PM",
+    "zipcode": "70117",
+    "about": "Prioritizing hiring NOLA residents to fill local needs." 
+    }
+    
+    ],
+    
+    "food":[
+    {
+    "name": "Feed NOLA",
+    "hours": "10 AM - 10 PM",
+    "zipcode": "70115",
+    "about": "Distributing food to everyone who comes by." 
+    },
+    {
+    "name": "N.O. Snacks",
+    "hours": "10 AM - 6 PM",
+    "zipcode": "70119",
+    "about": "We specialize in providing snacks for kids who might need an extra meal."
+    },
+    {
+    "name": "Crescent City Cooks",
+    "hours": "11 AM - 7 PM",
+    "zipcode": "70116",
+    "about": "Our mission is to provide packaged meals to anyone who stops by." 
+    }
+    ],
+    
+    
+    "housing":[
+    {
+    "name": "Big Easy Renting",
+    "hours": "10 AM - 6 PM",
+    "zipcode": "70126",
+    "about": "A housing solutions for single parent households." 
+    },
+    {
+    "name": "Operation N.O. House",
+    "hours": "9 AM - 5 PM",
+    "zipcode": "70122",
+    "about": "Connecting people with affordable housing solutions." 
+    },
+    {
+    "name": "Housing N.O.W.",
+    "hours": "10 AM - 6 PM",
+    "zipcode": "70123",
+    "about": "Our main priority is finding housing for women in New Orleans." 
+    }
+    ]
+    
+    }
