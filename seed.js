@@ -9,7 +9,7 @@ const resourceArray = [
   'Transportation',
   'Education',
   'Childcare',
-  'Health',
+  'Health'
 ];
 
 const nolaBoundaries = {
