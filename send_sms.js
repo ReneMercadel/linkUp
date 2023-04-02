@@ -64,31 +64,28 @@ const fetchResourcesByType = async () => {
     let shelterResourceData = [];
     const sortedResourcesObject = {
       Education: [],
+      ChildCare: [],
       Health: [],
       Transportation: [],
       Shelter: [],
       Food: []
     
     };
+
     const resourceData = await fetchResourceData();
 
 
-    // filter for food resources
+    // filter resources based on category
     for (let key in resourceData) {
-      // resourceTypesArray.forEach(type => {
         for (const resourceType in sortedResourcesObject) {
           if (resourceData[key].resource === resourceType.toString()) {
-            // console.log(resourceData[key]);
-            // while (sortedResourcesObject[resourceType].length < 5){
               sortedResourcesObject[resourceType].push(resourceData[key]);
-            // }
         }
         
       }
 
     }
 
-    // console.log(sortedResourcesObject.Transportation);
 
     const textResponseObject = {}; 
 
@@ -99,51 +96,12 @@ const fetchResourcesByType = async () => {
               return `Contact: ${resource.offeredBy.name} \nPhone Number: ${resource.offeredBy.phone} \nLocation: Location: ${resource.location.latitude}, ${resource.location.longitude}\nAvailable Until: ${resource.availableUntil} \n\n`;
         })
       let fullResourceResponse = `There are ${sortedResourcesObject[resourceType].length} ${resourceType} resources available in New Orleans near you. Here they are from closest to farthest: \n\n ${informationResponse} \n\n If you would like to see more resources, please text 'more'}`;
-        //     console.log('educationOutput \n', educationOutput))
+
       textResponseObject[resourceType] = fullResourceResponse
 
     }
-
-
-
-    // grab first 4 food resources
-    foodResourceData = foodResourceData.slice(0, 4);
-    // console.log('', foodResourceData \n.resource);
-    // grab first 5 shelter resources 
-    shelterResourceData = shelterResourceData.slice(0,5);
-    // console.log('', shelterResourceData \n);
-
-    // format text response
-
-   
-    // console.log('', sortedResourcesObject \n['Education']);
-    
-    
-    // Object.keys(sortedResourcesObject).forEach(resourceType => {
-    //   console.log('', resourceType \n, sortedResourcesObject[resourceType] )
-
-    // });
-
-
-
-   
-    let returnedFoodResources = foodResourceData.map((resource) => {
-      return `Location: ${resource.location.latitude}, ${resource.location.longitude} \nOffered By: ${resource.offeredBy.name} \nContact: ${resource.offeredBy.phone} \nAvailable Until: ${resource.availableUntil} \n\n`;
-    });
-
-    let returnedShelterResources = shelterResourceData.map((resource) => {
-      return `Location: ${resource.location.latitude}, ${resource.location.longitude} \nOffered By: ${resource.offeredBy.name} \nContact: ${resource.offeredBy.phone} \nAvailable Until: ${resource.availableUntil} \n\n`;
-    });
-
-    let returnText = `There are ${shelterResourceData.length} shelter resources available in New Orleans near you. Here they are from closest to farthest: \n\n ${returnedShelterResources} \n\n If you would like to see more resources, please text 'more'}`;
-    let foodReturnText = `There are ${foodResourceData.length} food resources available in New Orleans near you. Here they are from closest to farthest: \n\n ${returnedFoodResources} \n\n If you would like to see more resources, please text 'more'}`;// console.log('', returnText \n);
-
   
     // log text response (still need to send to user)
-    // console.log('', 'returnText \n \n\n', returnText);
-    // console.log('', sortedResourcesObject \n);
-    // return sortedResourcesObject;
-    console.log('textResponseObject.Food  \n.', textResponseObject.Food);
     return textResponseObject; 
     // return returnText;
   } catch (error) {
@@ -158,45 +116,39 @@ const textResponseObject = await fetchResourcesByType();
 console.log('textResponseObject.Food \n', textResponseObject.Food); 
 fetchResourcesByType();
 
-// console.log(resourceTypeTextInfo.Shelter);
-
-// console.log(foodTextResponse);
-// console.log('foodTextResponse', foodTextResponse);
-
-// let returnText = `There are ${shelterResourceData.length} shelter resources available in New Orleans near you. Here they are from closest to farthest: \n\n ${returnedShelterResources} \n\n If you would like to see more resources, please text 'more'}`;
 
 
 // webhook to handle response
 app.post('/message-rene', async (req, res) => {
   console.log(`req`, req.body.Body);
   const twiml = new MessagingResponse();
-  // twiml.message(foodTextResponse)
   let textSent = req.body.Body.toLowerCase();
   let inputText = textSent.charAt(0).toUpperCase() + textSent.slice(1);
   console.log(inputText); 
 console.log('text res obj || line 171',Object.keys( textResponseObject))
   if (Object.keys(textResponseObject).includes(inputText) && serverHitCounter > 0) {
-    // let keyResource = textSent.charAt(0).toUpperCase();
-    // console.log(textSent); 
     let currentresourceInfo = textResponseObject[inputText].toString();
     console.log(typeof currentresourceInfo);
 
     twiml.message(currentresourceInfo)
 
   }
-  // if (req.body.Body === 'food'|| 1) {
-  //   twiml.message(
-  //     foodTextResponse ||
-  //       'There are no food resources available in New Orleans near you. Please try again later.'
-  //   );}
-  else if (req.body.Body == 'more' || 'MORE') {
+  
+  if (inputText == 'More' && serverHitCounter > 1 ){
+    twiml.message(
+      'Please respond with one of the following:\n1: food\n2: shelter\n3: transportation\n4: education\n5: childcare\n6: health'
+    )
+
+
+  }
+
+  if (serverHitCounter === 0) {
     twiml.message(
 
       'Welcome to LinkUp NOLA! Thanks for hitting up The linkUP. Here\'s how it works (if it works). You\'ll get a text prompt and we will do our best to provide you with relevant resources. To infinity & beyond!!! (You can always text STOP to stop.) \n\n Please respond with one of the following:\n1: food\n2: shelter\n3: transportation\n4: education\n5: childcare\n6: health'
     )
   };
-  // const twiml = new MessagingResponse();
-  // console.log(foodTextResponse)
+
   res.writeHead(200, { 'Content-Type': 'text/xml' });
   res.end(twiml.toString());
   serverHitCounter += 1;
